@@ -43,20 +43,6 @@ public extension Publishers {
     }
 }
 
-public extension Publisher {
-    func catchArray<P: Publisher, Result>(_ publishers: [P],
-                                          resultSelector: @escaping (P.Output) -> Result) -> Publishers.CatchArray<P, Result> {
-        return .init(publishers: publishers, resultSelector: resultSelector)
-    }
-    
-    func catchArray<P: Publisher, Result>(_ publishers: [P]) -> Publishers.CatchArray<P, Result> where P.Output == Result {
-        let resultSelector = { (output: P.Output) -> Result in
-            return output
-        }
-        return .init(publishers: publishers, resultSelector: resultSelector)
-    }
-}
-
 extension Publishers {
     public struct CatchArray<P: Publisher,
                              Output>: Publisher where P.Failure == Error {
